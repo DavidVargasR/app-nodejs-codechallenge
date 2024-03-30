@@ -1,0 +1,28 @@
+{
+  "name": "transaction-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prisma:generate": "yarn prisma generate --schema=./prisma/schema.prisma",
+    "start": "node ./scripts/postbuild.js && npx ts-node ./src/index.ts",
+    "build": "tsup --sourcemap 0 --dts 0"
+  },
+  "author": "David Vargas",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/adapter-pg": "^5.11.0",
+    "@prisma/client": "^5.11.0",
+    "@types/uuid": "^9.0.8",
+    "fastify": "^4.26.2",
+    "kafkajs": "^2.2.4",
+    "pg": "^8.11.3",
+    "prisma": "^5.11.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3"
+  }
+}

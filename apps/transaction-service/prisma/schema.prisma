@@ -1,0 +1,34 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model transaction {
+  id                         Int                 @id @default(autoincrement())
+  account_external_id_debit  String              @db.VarChar(45)
+  account_external_id_credit String              @db.VarChar(45)
+  value                      Float
+  created_at                 DateTime            @db.Date
+  transaction_type_id        Int
+  transaction_status_id      Int?
+  transaction_external_id    String              @unique(map: "unique_transaction_external_id") @db.VarChar(100)
+  transaction_status         transaction_status? @relation(fields: [transaction_status_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_transaction_transaction_status1")
+  transaction_type           transaction_type    @relation(fields: [transaction_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_transaction_transaction_type")
+}
+
+model transaction_status {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(45)
+  transaction transaction[]
+}
+
+model transaction_type {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(45)
+  transaction transaction[]
+}
